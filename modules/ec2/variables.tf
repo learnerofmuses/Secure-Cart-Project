@@ -35,12 +35,12 @@ variable "secure_cart_app_sg_id" {
 }
 
 variable "public_subnet_id" {
-    description = "our public subnet ID"
+    description = "our public subnet ID where our bastion host will be launched"
     type = string
 }
 
 variable "private_subnet_id" {
-    description = "our private subnet ID"
+    description = "our private subnet ID where our secure-cart application server will be launched"
     type = string
 }
 
