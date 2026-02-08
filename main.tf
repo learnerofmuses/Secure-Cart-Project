@@ -29,7 +29,7 @@ module "alb" {
 
   name = "Secure-Cart-Application-LB"
   vpc_id = module.vpc.vpc_id
-  public_subnet_ids = module.vpc.public_subnet_ids
+  public_subnet_ids = [module.vpc.public_subnet_a_id, module.vpc.public_subnet_b_id]
 }
 
 module "ec2" {
@@ -39,7 +39,7 @@ module "ec2" {
   db_port = module.rds.db_port
 
   vpc_id = module.vpc.vpc_id
-  public_subnet_id = module.vpc.public_subnet_id
+  public_subnet_id = module.vpc.public_subnet_a_id
   private_subnet_id = module.vpc.private_subnet_a_id
   #private_subnet_id_b = module.vpc.private_subnet_b_id
 
