@@ -41,7 +41,7 @@ module "ec2" {
   vpc_id = module.vpc.vpc_id
   public_subnet_id = module.vpc.public_subnet_a_id
   private_subnet_id = module.vpc.private_subnet_a_id
-  #private_subnet_id_b = module.vpc.private_subnet_b_id
+  
 
   bastion_instance_type_id = var.bastion_instance_type_id
   bastion_ami_id = var.bastion_ami_id
