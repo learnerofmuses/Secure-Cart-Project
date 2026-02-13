@@ -4,7 +4,7 @@ resource "aws_vpc" "vpc_TS" {
   enable_dns_hostnames = true #allows instances launched within the vpc to have dns hostnames 
 
   tags = {
-    Name = "SecureCart app VPC"
+    name = "SecureCart app VPC"
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_subnet" "private_sub_A" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "SecureCart app private subnet A"
+    name = "SecureCart app private subnet A"
   }
 }
 
@@ -36,10 +36,11 @@ resource "aws_subnet" "private_sub_B" {
   availability_zone = "us-east-1b"
 
   tags = {
-    Name = "SecureCart app private subnet B"
+    name = "SecureCart app private subnet B"
   }
 }
 
+#our internet gateway allows communication between the internet and our vpc
 resource "aws_internet_gateway" "igw_TS" {
   vpc_id = aws_vpc.vpc_TS.id
 
@@ -69,4 +70,46 @@ resource "aws_route_table_association" "public_sub_a_assoc" {
 resource "aws_route_table_association" "public_sub_b_assoc" {
   subnet_id = aws_subnet.public_sub_B.id
   route_table_id = aws_route_table.public_rt.id
+}
+
+#our nat gateway allows instances in our private subnets to access the internet for updates and other necessary communication while still preventing inbound traffic from the internet to those instances
+resource "aws_eip" "nat_eip" { 
+  domain = "vpc"
+
+  tags = {
+    name = "our nat gateway elastic ip"
+  }
+}
+
+resource "aws_nat_gateway" "nat_gw" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id = aws_subnet.public_sub_A.id
+
+  tags = {
+    name = "our nat gateway"
+  }
+  depends_on = [aws_internet_gateway.igw_TS]
+}
+
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.vpc_TS.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw.id
+  }
+
+  tags = {
+    name = "our private route table allows all outbound traffic from our private subnets to access the internet"
+  }
+}
+
+resource "aws_route_table_association" "private_sub_a_assoc" {
+  subnet_id = aws_subnet.private_sub_A.id
+  route_table_id = aws_route_table.private_rt.id
+}
+
+resource "aws_route_table_association" "private_sub_b_assoc" {
+  subnet_id = aws_subnet.private_sub_B.id
+  route_table_id = aws_route_table.private_rt.id
 }
