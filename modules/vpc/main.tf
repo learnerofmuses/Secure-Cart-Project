@@ -26,7 +26,7 @@ resource "aws_subnet" "private_sub_A" {
   availability_zone = "us-east-1a"
 
   tags = {
-    name = "SecureCart app private subnet A"
+    Name = "Private Subnet A"
   }
 }
 
@@ -36,7 +36,7 @@ resource "aws_subnet" "private_sub_B" {
   availability_zone = "us-east-1b"
 
   tags = {
-    name = "SecureCart app private subnet B"
+    Name = "Private Subnet B"
   }
 }
 
@@ -45,7 +45,7 @@ resource "aws_internet_gateway" "igw_TS" {
   vpc_id = aws_vpc.vpc_TS.id
 
   tags = { 
-    name = "securecart app igw"
+    Name = "securecart app igw"
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_route_table" "public_rt" {
   }
 
   tags = { 
-    name = "our public route table which makes our public subnets public by routing traffic to the internet gateway"
+    Name = "our public route table which makes our public subnets public by routing traffic to the internet gateway"
   }
 }
 
@@ -77,7 +77,7 @@ resource "aws_eip" "nat_eip" {
   domain = "vpc"
 
   tags = {
-    name = "our nat gateway elastic ip"
+    Name = "our nat gateway elastic ip"
   }
 }
 
@@ -86,7 +86,7 @@ resource "aws_nat_gateway" "nat_gw" {
   subnet_id = aws_subnet.public_sub_A.id
 
   tags = {
-    name = "our nat gateway"
+    Name = "our nat gateway"
   }
   depends_on = [aws_internet_gateway.igw_TS]
 }
@@ -100,7 +100,7 @@ resource "aws_route_table" "private_rt" {
   }
 
   tags = {
-    name = "our private route table allows all outbound traffic from our private subnets to access the internet"
+    Name = "our private route table allows all outbound traffic from our private subnets to access the internet"
   }
 }
 

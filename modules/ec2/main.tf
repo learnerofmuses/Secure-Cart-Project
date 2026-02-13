@@ -7,7 +7,7 @@ resource "aws_instance" "bastion_instance" {
     key_name = var.key_name
     vpc_security_group_ids = [var.bastion_sg_id]
     tags = {
-        Name = "bastion host instance"
+        Name = "Bastion Host instance"
     }
 }
 
@@ -19,7 +19,7 @@ resource "aws_instance" "secure_cart_app_instance" {
     key_name = var.key_name
     vpc_security_group_ids = [var.secure_cart_app_sg_id]
     tags = {
-        Name = "application server instance"
+        Name = "Application Server instance"
     }
     depends_on = [aws_instance.bastion_instance]
 }
