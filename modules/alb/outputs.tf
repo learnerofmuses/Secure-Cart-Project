@@ -10,3 +10,5 @@ output "alb_dns_name" {
     description = "our public dns name for the application load balancer"
     value = aws_lb.application_lb_TS.dns_name
 }
+
+

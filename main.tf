@@ -54,3 +54,8 @@ module "ec2" {
   
   key_name = var.key_name
 }
+
+module "waf" {
+  source = "./modules/waf"
+  
+}
