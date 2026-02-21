@@ -57,5 +57,5 @@ module "ec2" {
 
 module "waf" {
   source = "./modules/waf"
-  
+  alb_arn = module.alb.alb_arn
 }
