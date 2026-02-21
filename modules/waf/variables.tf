@@ -10,3 +10,7 @@ variable "metric_name" {
     default     = "SecureCartWAFMetric"
 }
 
+variable "alb_arn" {
+    description = "the ARN of the ALB to associate with the WAF"
+    type = string
+}
