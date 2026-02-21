@@ -12,12 +12,20 @@ resource "aws_subnet" "public_sub_A" {
   vpc_id = aws_vpc.vpc_TS.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "Public Subnet A"
+  }
 }
 
 resource "aws_subnet" "public_sub_B" {
   vpc_id = aws_vpc.vpc_TS.id
   cidr_block = "10.0.2.0/24"
   availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "Public Subnet B"
+  }
 }
 
 resource "aws_subnet" "private_sub_A" {
