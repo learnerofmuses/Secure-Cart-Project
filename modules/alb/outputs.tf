@@ -11,4 +11,8 @@ output "alb_dns_name" {
     value = aws_lb.application_lb_TS.dns_name
 }
 
+output "alb_arn" {
+    description = "the ARN of the application load balancer, used for WAF association"
+    value = aws_lb.application_lb_TS.arn
+}
 
